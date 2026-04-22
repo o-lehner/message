@@ -12,33 +12,77 @@
     
     <!-- Google Fonts: Courier Prime -->
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.2">
+    <link rel="stylesheet" href="style.css?v=2.3">
 </head>
 <body>
     <div class="container">
         <!-- Flowers will be generated here by CSS/JS -->
     </div>
 
-    <div class="audio-player">
-        <div class="player-bg"></div>
+    <!-- Ekran blokady PIN -->
+    <div id="pin-screen" class="pin-screen">
+        <div class="pin-header">Kiedy się poznaliśmy?</div>
         
-        <div class="player-content">
-            <button id="play-pause-btn" class="play-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            </button>
-            
-            <div class="timeline">
-                <div class="progress"></div>
+        <div id="pin-dots" class="pin-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div class="pin-keyboard">
+            <div class="pin-row">
+                <button class="pin-btn" data-value="1">1</button>
+                <button class="pin-btn" data-value="2">2</button>
+                <button class="pin-btn" data-value="3">3</button>
             </div>
+            <div class="pin-row">
+                <button class="pin-btn" data-value="4">4</button>
+                <button class="pin-btn" data-value="5">5</button>
+                <button class="pin-btn" data-value="6">6</button>
+            </div>
+            <div class="pin-row">
+                <button class="pin-btn" data-value="7">7</button>
+                <button class="pin-btn" data-value="8">8</button>
+                <button class="pin-btn" data-value="9">9</button>
+            </div>
+            <div class="pin-row">
+                <div class="pin-btn-empty"></div>
+                <button class="pin-btn" data-value="0">0</button>
+                <button id="pin-delete" class="pin-btn-action">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Główna zawartość (odtwarzacz) -->
+    <div id="main-content" class="main-content hidden">
+        <div class="audio-player">
+            <div class="player-bg"></div>
             
-            <div class="time-display">
-                <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+            <div class="player-content">
+                <button id="play-pause-btn" class="play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </button>
+                
+                <div class="timeline">
+                    <div class="progress"></div>
+                </div>
+                
+                <div class="time-display">
+                    <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+                </div>
             </div>
         </div>
     </div>
 
     <audio id="audio" src="assets/audio.mp3"></audio>
 
-    <script src="script.js?v=2.1"></script>
+    <script src="script.js?v=2.3"></script>
 </body>
 </html>
