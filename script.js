@@ -7,15 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentTimeEl = document.getElementById('current-time');
     const durationEl = document.getElementById('duration');
 
-    const playIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
-    const pauseIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+    const playIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+    const pauseIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
 
     // --- Flower Generation (Avoid Player) ---
     const numberOfFlowers = 30;
     const placedFlowers = [];
     const flowerSize = 80; 
     const padding = 10; 
-    const playerPadding = 20; 
+    const playerPadding = 40; // Wiekszy margines dla nowego tła
 
     const playerRect = document.querySelector('.audio-player').getBoundingClientRect();
 
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
                 }
             }
-        } while (overlap && attempts < 200);
+        } while (overlap && attempts < 250);
 
         if (!overlap) {
             placedFlowers.push({ x, y });
@@ -66,8 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Format Time Helper ---
+    // --- Helper Format Time ---
     function formatTime(seconds) {
+        if (isNaN(seconds)) return "0:00";
         const min = Math.floor(seconds / 60);
         const sec = Math.floor(seconds % 60);
         return `${min}:${sec < 10 ? '0' : ''}${sec}`;
@@ -156,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchmove', drag, { passive: false });
     window.addEventListener('touchend', stopDragging);
 
-    // Initial load if audio metadata is already available
     if (audio.readyState >= 1) {
         durationEl.textContent = formatTime(audio.duration);
     }

@@ -1,11 +1,12 @@
 :root {
-    --player-height: 100px;
-    --border-thick: 4px;
+    --player-width: calc(100% - 60px);
+    --max-player-width: 400px;
+    --border-thin: 2px;
 }
 
 body {
     margin: 0;
-    font-family: 'Courier Prime', monospace; /* Globalna czcionka */
+    font-family: 'Courier Prime', monospace;
     background-color: #fff;
     overflow: hidden;
     height: 100vh;
@@ -34,71 +35,69 @@ body {
 }
 
 .audio-player {
-    width: calc(100% - 40px);
-    max-width: 450px;
-    height: var(--player-height);
-    display: flex;
-    align-items: center;
-    padding: 0 25px;
+    width: var(--player-width);
+    max-width: var(--max-player-width);
     position: relative;
-    box-sizing: border-box;
+    z-index: 10;
 }
 
 .player-bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
     background-color: #fff;
-    border: var(--border-thick) solid #000;
-    border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: var(--border-thin) solid #000;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     z-index: 5;
 }
 
+.player-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+
 .play-btn {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    border: var(--border-thick) solid #000;
-    background-color: #fff;
+    border: var(--border-thin) solid #000;
+    background-color: transparent;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0;
-    margin-right: 20px;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 10;
+    margin-bottom: 25px;
+    transition: transform 0.2s ease;
+}
+
+.play-btn:active {
+    transform: scale(0.95);
 }
 
 .play-btn svg {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     stroke: #000;
     fill: #000;
 }
 
-.player-controls {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    z-index: 10;
-}
-
 .timeline {
     width: 100%;
-    height: 14px;
-    background-color: #ccc;
+    height: 4px;
+    background-color: #eee;
     cursor: pointer;
     position: relative;
-    display: flex;
-    align-items: center;
+    margin-bottom: 15px;
 }
 
+/* Wiekszy obszar klikania dla paska */
 .timeline::before {
     content: '';
     position: absolute;
@@ -109,16 +108,14 @@ body {
 }
 
 .progress {
-    height: 6px;
+    height: 100%;
     width: 0;
     background-color: #000;
     pointer-events: none;
 }
 
 .time-display {
-    font-size: 14px;
-    color: #000;
-    text-align: right;
-    margin-top: 5px;
-    font-weight: bold;
+    font-size: 13px;
+    color: #666;
+    letter-spacing: 1px;
 }
