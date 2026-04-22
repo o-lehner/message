@@ -1,13 +1,13 @@
 :root {
-    --player-width: calc(100% - 60px);
-    --max-player-width: 400px;
-    --border-thin: 2px;
+    --bg-color: #f0f0f0; /* Lekko szare tło jest niezbędne dla efektu 3D */
+    --player-width: calc(100% - 80px);
+    --max-player-width: 380px;
 }
 
 body {
     margin: 0;
     font-family: 'Courier Prime', monospace;
-    background-color: #fff;
+    background-color: var(--bg-color);
     overflow: hidden;
     height: 100vh;
     display: flex;
@@ -32,6 +32,7 @@ body {
     background-image: url('assets/flower.png');
     background-size: contain;
     background-repeat: no-repeat;
+    opacity: 0.8;
 }
 
 .audio-player {
@@ -43,14 +44,15 @@ body {
 
 .player-bg {
     position: absolute;
-    top: -20px;
+    top: -30px;
     left: -20px;
     right: -20px;
-    bottom: -20px;
-    background-color: #fff;
-    border: var(--border-thin) solid #000;
-    border-radius: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    bottom: -30px;
+    background-color: var(--bg-color);
+    border-radius: 50px;
+    /* EFEKT 3D (Neumorphism) */
+    box-shadow: 20px 20px 60px #cbcbcb, 
+               -20px -20px 60px #ffffff;
     z-index: 5;
 }
 
@@ -60,45 +62,51 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 0;
 }
 
 .play-btn {
-    width: 80px;
-    height: 80px;
-    border: none; /* Usunięcie obramowania */
-    background-color: transparent;
+    width: 70px;
+    height: 70px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--bg-color);
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-    padding: 0;
+    margin-bottom: 30px;
+    /* EFEKT 3D DLA PRZYCISKU */
+    box-shadow: 6px 6px 12px #cbcbcb, 
+               -6px -6px 12px #ffffff;
+    transition: all 0.2s ease;
 }
 
 .play-btn:active {
-    transform: scale(0.9);
-    opacity: 0.7;
+    box-shadow: inset 4px 4px 8px #cbcbcb, 
+                inset -4px -4px 8px #ffffff;
+    transform: scale(0.98);
 }
 
 .play-btn svg {
-    width: 45px; /* Większa ikona */
-    height: 45px;
-    stroke: #000;
-    fill: #000;
+    width: 30px;
+    height: 30px;
+    stroke: #333;
+    fill: #333;
 }
 
 .timeline {
     width: 100%;
-    height: 4px;
-    background-color: #eee;
+    height: 6px;
+    background-color: var(--bg-color);
+    border-radius: 10px;
     cursor: pointer;
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    /* WYTŁOCZONY PASEK */
+    box-shadow: inset 2px 2px 5px #cbcbcb, 
+                inset -2px -2px 5px #ffffff;
 }
 
-/* Wiekszy obszar klikania dla paska */
 .timeline::before {
     content: '';
     position: absolute;
@@ -111,28 +119,30 @@ body {
 .progress {
     height: 100%;
     width: 0;
-    background-color: #000;
+    background-color: #333;
+    border-radius: 10px;
     pointer-events: none;
     position: relative;
 }
 
-/* Kropka na końcu paska */
+/* Kropka jako wystający element 3D */
 .progress::after {
     content: '';
     position: absolute;
-    right: -6px; /* Połowa szerokości kropki */
+    right: -8px;
     top: 50%;
     transform: translateY(-50%);
-    width: 12px;
-    height: 12px;
-    background-color: #000;
+    width: 16px;
+    height: 16px;
+    background-color: var(--bg-color);
     border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    box-shadow: 3px 3px 6px #cbcbcb, 
+               -3px -3px 6px #ffffff;
 }
 
 .time-display {
-    font-size: 13px;
-    color: #666;
-    letter-spacing: 1px;
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 1.5px;
+    font-weight: bold;
 }
