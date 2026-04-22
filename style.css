@@ -260,6 +260,8 @@ body {
 .main-content {
     transition: opacity 0.8s ease;
     opacity: 1;
+    width: 100%;
+    height: 100%;
 }
 
 .main-content.hidden {

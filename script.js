@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteBtn = document.getElementById('pin-delete');
     const pinDotsContainer = document.getElementById('pin-dots');
 
-    const CORRECT_PIN = "07022026";
+    const CORRECT_PIN = "070226";
     let enteredPin = "";
 
     const playIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
@@ -125,11 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     keyboardBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            if (enteredPin.length < 8) {
+            if (enteredPin.length < 6) {
                 enteredPin += btn.getAttribute('data-value');
                 updateDots();
                 
-                if (enteredPin.length === 8) {
+                if (enteredPin.length === 6) {
                     setTimeout(checkPin, 250);
                 }
             }
