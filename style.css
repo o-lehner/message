@@ -1,0 +1,80 @@
+:root {
+    --player-height: 60px;
+    --border-thick: 4px;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.flower {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-image: url('assets/flower.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.audio-player {
+    width: 450px;
+    height: var(--player-height);
+    background-color: #fff;
+    border: var(--border-thick) solid #000;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.play-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: var(--border-thick) solid #000;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin-right: 20px;
+}
+
+.play-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: #000;
+    fill: #000;
+}
+
+.timeline {
+    flex-grow: 1;
+    height: var(--border-thick);
+    background-color: #ccc;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress {
+    height: 100%;
+    width: 0;
+    background-color: #000;
+}
