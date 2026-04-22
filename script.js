@@ -4,16 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const playPauseBtn = document.getElementById('play-pause-btn');
     const timeline = document.querySelector('.timeline');
     const progress = document.querySelector('.progress');
+    const currentTimeEl = document.getElementById('current-time');
+    const durationEl = document.getElementById('duration');
 
     const playIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
     const pauseIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
 
-    // --- Flower Generation (Better Anti-Overlap + Avoid Player) ---
+    // --- Flower Generation (Avoid Player) ---
     const numberOfFlowers = 30;
     const placedFlowers = [];
     const flowerSize = 80; 
-    const padding = 10; // Odstęp między kwiatkami
-    const playerPadding = 15; // Odstęp od odtwarzacza
+    const padding = 10; 
+    const playerPadding = 20; 
 
     const playerRect = document.querySelector('.audio-player').getBoundingClientRect();
 
@@ -27,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
             y = Math.random() * (window.innerHeight - flowerSize);
             attempts++;
 
-            // 1. Sprawdź kolizję z odtwarzaczem
             const flowerRect = {
                 left: x - playerPadding,
                 right: x + flowerSize + playerPadding,
@@ -43,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 continue;
             }
 
-            // 2. Sprawdź kolizję z innymi kwiatkami
             for (const f of placedFlowers) {
                 if (!(x + flowerSize + padding < f.x || 
                       x > f.x + flowerSize + padding || 
@@ -66,6 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- Format Time Helper ---
+    function formatTime(seconds) {
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+
     // --- Player Logic ---
     function togglePlayPause() {
         if (audio.paused) {
@@ -81,8 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isDragging) {
             const percent = (audio.currentTime / audio.duration) * 100;
             progress.style.width = `${percent}%`;
+            currentTimeEl.textContent = formatTime(audio.currentTime);
         }
     }
+
+    audio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audio.duration);
+    });
 
     let isDragging = false;
 
@@ -91,14 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
         const width = rect.width;
         let clickX = clientX - rect.left;
-        
-        // Ograniczenie do granic paska
         clickX = Math.max(0, Math.min(clickX, width));
         
         const duration = audio.duration;
         if (duration) {
             const percent = (clickX / width) * 100;
             progress.style.width = `${percent}%`;
+            currentTimeEl.textContent = formatTime((clickX / width) * duration);
             if (!isDragging) {
                 audio.currentTime = (clickX / width) * duration;
             }
@@ -126,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function drag(e) {
         if (isDragging) {
             setProgress(e);
-            e.preventDefault(); // Zapobiega przewijaniu strony na telefonie podczas przesuwania paska
+            e.preventDefault();
         }
     }
 
@@ -135,15 +146,18 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.addEventListener('ended', () => {
         playPauseBtn.innerHTML = playIcon;
         progress.style.width = '0%';
+        currentTimeEl.textContent = '0:00';
     });
 
-    // Obsługa myszy
     timeline.addEventListener('mousedown', startDragging);
     window.addEventListener('mousemove', drag);
     window.addEventListener('mouseup', stopDragging);
-
-    // Obsługa dotyku
     timeline.addEventListener('touchstart', startDragging);
     window.addEventListener('touchmove', drag, { passive: false });
     window.addEventListener('touchend', stopDragging);
+
+    // Initial load if audio metadata is already available
+    if (audio.readyState >= 1) {
+        durationEl.textContent = formatTime(audio.duration);
+    }
 });

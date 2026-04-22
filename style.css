@@ -5,7 +5,7 @@
 
 body {
     margin: 0;
-    font-family: sans-serif;
+    font-family: 'Courier Prime', monospace; /* Globalna czcionka */
     background-color: #fff;
     overflow: hidden;
     height: 100vh;
@@ -37,16 +37,24 @@ body {
     width: calc(100% - 40px);
     max-width: 450px;
     height: var(--player-height);
-    background-color: #fff;
-    border: var(--border-thick) solid #000;
-    border-radius: 50px;
     display: flex;
     align-items: center;
     padding: 0 25px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     position: relative;
-    z-index: 10;
     box-sizing: border-box;
+}
+
+.player-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    border: var(--border-thick) solid #000;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 5;
 }
 
 .play-btn {
@@ -62,6 +70,8 @@ body {
     padding: 0;
     margin-right: 20px;
     flex-shrink: 0;
+    position: relative;
+    z-index: 10;
 }
 
 .play-btn svg {
@@ -71,8 +81,16 @@ body {
     fill: #000;
 }
 
-.timeline {
+.player-controls {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 10;
+}
+
+.timeline {
+    width: 100%;
     height: 14px;
     background-color: #ccc;
     cursor: pointer;
@@ -95,4 +113,12 @@ body {
     width: 0;
     background-color: #000;
     pointer-events: none;
+}
+
+.time-display {
+    font-size: 14px;
+    color: #000;
+    text-align: right;
+    margin-top: 5px;
+    font-weight: bold;
 }
