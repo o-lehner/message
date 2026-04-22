@@ -12,18 +12,24 @@
     
     <!-- Google Fonts: Courier Prime -->
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.8">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css?v=2.9">
+    </head>
+    <body>
     <div class="container">
         <!-- Flowers will be generated here by CSS/JS -->
     </div>
 
     <!-- Ekran blokady PIN -->
     <div id="pin-screen" class="pin-screen">
-        <div class="pin-header">Kiedy się poznaliśmy?</div>
-        <div id="hint-text" class="pin-hint">Pierwszy dzień ośrodka</div>
-        
+        <div class="pin-header">Wpisz kod dostępu:</div>
+
+        <div id="hint-box" class="hint-box hidden">
+            <button id="hint-close" class="hint-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="hint-content">Kod dostępu znajduje się na kartce, która jest w pudełku.</div>
+        </div>
+
         <div id="pin-dots" class="pin-dots">
             <div class="dot"></div>
             <div class="dot"></div>
@@ -84,21 +90,6 @@
 
     <audio id="audio" src="assets/audio.mp3"></audio>
 
-    <!-- Modal potwierdzający podpowiedź -->
-    <div id="hint-modal" class="hint-modal-overlay hidden">
-        <div class="hint-modal">
-            <div class="modal-text">Czy na pewno chcesz zobaczyć podpowiedź?</div>
-            <div class="modal-btns">
-                <button id="modal-no" class="modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-                <button id="modal-yes" class="modal-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js?v=2.8"></script>
+    <script src="script.js?v=2.9"></script>
 </body>
 </html>

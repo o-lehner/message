@@ -13,13 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const keyboardBtns = document.querySelectorAll('.pin-btn');
     const deleteBtn = document.getElementById('pin-delete');
     const hintBtn = document.getElementById('pin-hint-btn');
-    const hintText = document.getElementById('hint-text');
-    const hintModal = document.getElementById('hint-modal');
-    const modalYes = document.getElementById('modal-yes');
-    const modalNo = document.getElementById('modal-no');
+    const hintBox = document.getElementById('hint-box');
+    const hintClose = document.getElementById('hint-close');
     const pinDotsContainer = document.getElementById('pin-dots');
 
-    const CORRECT_PIN = "070226";
+    // Kod PIN jest zakodowany (Base64), aby nie był widoczny jako tekst
+    const TARGET = "MjM5OTY1"; 
     let enteredPin = "";
 
     const playIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
@@ -90,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initial generation (no avoid element yet)
     generateFlowers();
 
     // --- PIN Logic ---
@@ -105,22 +103,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkPin() {
-        if (enteredPin === CORRECT_PIN) {
-            // Success
+        if (btoa(enteredPin) === TARGET) {
             pinScreen.classList.add('fade-out');
             setTimeout(() => {
                 pinScreen.style.display = 'none';
                 mainContent.classList.remove('hidden');
                 mainContent.classList.add('fade-in');
-                
-                // Regenerate flowers after a short delay to ensure the player layout is finalized
                 setTimeout(() => {
                     const player = document.querySelector('.audio-player');
                     generateFlowers(player);
                 }, 50);
             }, 500);
         } else {
-            // Error
             pinDotsContainer.classList.add('error');
             setTimeout(() => {
                 pinDotsContainer.classList.remove('error');
@@ -135,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (enteredPin.length < 6) {
                 enteredPin += btn.getAttribute('data-value');
                 updateDots();
-                
                 if (enteredPin.length === 6) {
                     setTimeout(checkPin, 250);
                 }
@@ -151,16 +144,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     hintBtn.addEventListener('click', () => {
-        hintModal.classList.remove('hidden');
+        hintBox.classList.remove('hidden');
     });
 
-    modalNo.addEventListener('click', () => {
-        hintModal.classList.add('hidden');
-    });
-
-    modalYes.addEventListener('click', () => {
-        hintModal.classList.add('hidden');
-        hintText.classList.add('visible');
+    hintClose.addEventListener('click', () => {
+        hintBox.classList.add('hidden');
     });
 
     // --- Helper Format Time ---
@@ -202,7 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const width = rect.width;
         let clickX = clientX - rect.left;
         clickX = Math.max(0, Math.min(clickX, width));
-        
         const duration = audio.duration;
         if (duration) {
             const percent = (clickX / width) * 100;
@@ -226,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const width = rect.width;
             let clickX = clientX - rect.left;
             clickX = Math.max(0, Math.min(clickX, width));
-            
             audio.currentTime = (clickX / width) * audio.duration;
             isDragging = false;
         }
