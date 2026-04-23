@@ -10,14 +10,18 @@ body {
     background-color: var(--bg-color);
     overflow: hidden;
     height: 100vh;
+    height: 100dvh; /* Dynamiczna wysokość dla urządzeń mobilnych */
     display: flex;
     justify-content: center;
     align-items: center;
     touch-action: manipulation;
+    /* Uwzględnienie bezpiecznych obszarów dla telefonów z notchem */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .container {
-    position: absolute;
+    position: fixed; /* Zmienione na fixed, aby zawsze wypełniało ekran */
     top: 0;
     left: 0;
     width: 100%;
@@ -165,6 +169,8 @@ body {
     align-items: center;
     justify-content: center;
     transition: opacity 0.5s ease, visibility 0.5s ease;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .pin-screen.fade-out {
@@ -317,15 +323,20 @@ body {
     transform: scale(0.96);
 }
 
-/* --- MAIN CONTENT HIDING --- */
+/* --- MAIN CONTENT STYLES --- */
 .main-content {
     transition: opacity 0.8s ease;
     opacity: 1;
-    position: absolute;
+    position: fixed; /* Zmienione na fixed, aby idealnie pokrywało się z ekranem PIN */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .main-content.hidden {
@@ -334,9 +345,6 @@ body {
 }
 
 .main-content.fade-in {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     animation: fadeIn 0.8s forwards;
 }
 
