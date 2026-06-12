@@ -69,6 +69,22 @@
         </div>
     </div>
 
+    <!-- Ekran wyboru wersji -->
+    <div id="selection-screen" class="selection-screen hidden">
+        <div class="selection-header">Wiem, że masz ADHD dlatego specjalnie dla ciebie możliwość wyboru:</div>
+        
+        <div class="selection-options">
+            <button class="selection-btn" data-version="music">
+                <span class="btn-text">Moje gadanie + muzyka w tle</span>
+            </button>
+            <button class="selection-btn" data-version="no-music">
+                <span class="btn-text">Moje gadanie bez muzyki w tle</span>
+            </button>
+        </div>
+
+        <div class="selection-footer">(muzyczka robi robotę, ale wybierz opcję, która pozwoli ci się skupić)</div>
+    </div>
+
     <!-- Główna zawartość (odtwarzacz) -->
     <div id="main-content" class="main-content hidden">
         <div class="audio-player">
@@ -86,11 +102,15 @@
                 <div class="time-display">
                     <span id="current-time">0:00</span> / <span id="duration">0:00</span>
                 </div>
+
+                <button id="change-version-btn" class="change-version-btn">
+                    Zmień wersję
+                </button>
             </div>
         </div>
     </div>
 
-    <audio id="audio" src="assets/audio.mp3"></audio>
+    <audio id="audio"></audio>
 
     <script src="script.js?v=2.11"></script>
 </body>

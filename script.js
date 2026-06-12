@@ -8,7 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const durationEl = document.getElementById('duration');
     
     const pinScreen = document.getElementById('pin-screen');
+    const selectionScreen = document.getElementById('selection-screen');
     const mainContent = document.getElementById('main-content');
+    const selectionBtns = document.querySelectorAll('.selection-btn');
+    const changeVersionBtn = document.getElementById('change-version-btn');
     const pinDots = document.querySelectorAll('.dot');
     const keyboardBtns = document.querySelectorAll('.pin-btn');
     const deleteBtn = document.getElementById('pin-delete');
@@ -25,19 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const pauseIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
 
     // --- Flower Generation ---
-    function generateFlowers(avoidElement = null) {
+    function generateFlowers(avoidElements = []) {
         container.innerHTML = '';
         const isMobile = window.innerWidth < 600;
         const numberOfFlowers = isMobile ? 35 : 55;
         const placedFlowers = [];
         const flowerSize = 80; 
         const padding = 10; 
-        const playerPadding = 40;
+        const playerPadding = 30;
 
-        let avoidRect = null;
-        if (avoidElement) {
-            avoidRect = avoidElement.getBoundingClientRect();
-        }
+        const avoidRects = avoidElements.map(el => el.getBoundingClientRect());
 
         for (let i = 0; i < numberOfFlowers; i++) {
             let x, y, overlap;
@@ -49,22 +49,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 y = Math.random() * (window.innerHeight - flowerSize);
                 attempts++;
 
-                if (avoidRect) {
-                    const flowerRect = {
-                        left: x - playerPadding,
-                        right: x + flowerSize + playerPadding,
-                        top: y - playerPadding,
-                        bottom: y + flowerSize + playerPadding
-                    };
+                const flowerRect = {
+                    left: x - playerPadding,
+                    right: x + flowerSize + playerPadding,
+                    top: y - playerPadding,
+                    bottom: y + flowerSize + playerPadding
+                };
 
+                for (const avoidRect of avoidRects) {
                     if (!(flowerRect.right < avoidRect.left || 
                           flowerRect.left > avoidRect.right || 
                           flowerRect.bottom < avoidRect.top || 
                           flowerRect.top > avoidRect.bottom)) {
                         overlap = true;
-                        continue;
+                        break;
                     }
                 }
+
+                if (overlap) continue;
 
                 for (const f of placedFlowers) {
                     if (!(x + flowerSize + padding < f.x || 
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    generateFlowers();
+    generateFlowers([document.querySelector('.pin-keyboard'), document.querySelector('.pin-header'), pinDotsContainer]);
 
     // --- PIN Logic ---
     function updateDots() {
@@ -107,11 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
             pinScreen.classList.add('fade-out');
             setTimeout(() => {
                 pinScreen.style.display = 'none';
-                mainContent.classList.remove('hidden');
-                mainContent.classList.add('fade-in');
+                selectionScreen.classList.remove('hidden');
+                selectionScreen.classList.add('fade-in');
                 setTimeout(() => {
-                    const player = document.querySelector('.audio-player');
-                    generateFlowers(player);
+                    generateFlowers([
+                        document.querySelector('.selection-header'),
+                        document.querySelector('.selection-options'),
+                        document.querySelector('.selection-footer')
+                    ]);
                 }, 50);
             }, 500);
         } else {
@@ -123,6 +128,41 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         }
     }
+
+    // --- Selection Logic ---
+    selectionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const version = btn.getAttribute('data-version');
+            const audioSrc = version === 'music' ? 'assets/audio_music.mp3' : 'assets/audio_no_music.mp3';
+            
+            audio.src = audioSrc;
+            audio.load();
+
+            selectionScreen.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            mainContent.classList.add('fade-in');
+
+            setTimeout(() => {
+                generateFlowers([document.querySelector('.audio-player')]);
+            }, 50);
+        });
+    });
+
+    changeVersionBtn.addEventListener('click', () => {
+        audio.pause();
+        playPauseBtn.innerHTML = playIcon;
+        
+        mainContent.classList.add('hidden');
+        selectionScreen.classList.remove('hidden');
+        
+        setTimeout(() => {
+            generateFlowers([
+                document.querySelector('.selection-header'),
+                document.querySelector('.selection-options'),
+                document.querySelector('.selection-footer')
+            ]);
+        }, 50);
+    });
 
     keyboardBtns.forEach(btn => {
         btn.addEventListener('click', () => {
