@@ -132,10 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Selection Logic ---
+    const _0x4a2 = ["YXNzZXRzL3Y5czdfazNwX204eDIubXAz", "YXNzZXRzL24ydzRfcnZ0X2I1cTkubXAz"]; // Encoded paths
+
     selectionBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const version = btn.getAttribute('data-version');
-            const audioSrc = version === 'music' ? 'assets/audio_music.mp3' : 'assets/audio_no_music.mp3';
+            const audioSrc = atob(version === 'music' ? _0x4a2[0] : _0x4a2[1]);
             
             audio.src = audioSrc;
             audio.load();
