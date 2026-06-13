@@ -215,6 +215,10 @@ body {
     font-weight: bold;
 }
 
+.nowrap {
+    white-space: nowrap;
+}
+
 .hint-close {
     position: absolute;
     top: 15px;
