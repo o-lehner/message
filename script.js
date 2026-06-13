@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('main-content');
     const selectionBtns = document.querySelectorAll('.selection-btn');
     const changeVersionBtn = document.getElementById('change-version-btn');
+    const skipBackBtn = document.getElementById('skip-back-btn');
+    const skipForwardBtn = document.getElementById('skip-forward-btn');
     const pinDots = document.querySelectorAll('.dot');
     const keyboardBtns = document.querySelectorAll('.pin-btn');
     const deleteBtn = document.getElementById('pin-delete');
@@ -189,6 +191,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     hintClose.addEventListener('click', () => {
         hintBox.classList.add('hidden');
+    });
+
+    // --- Skip Logic ---
+    skipBackBtn.addEventListener('click', () => {
+        audio.currentTime = Math.max(0, audio.currentTime - 10);
+        updateProgress();
+    });
+
+    skipForwardBtn.addEventListener('click', () => {
+        audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+        updateProgress();
     });
 
     // --- Helper Format Time ---
