@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Selection Logic ---
-    const _0x4a2 = ["YXNzZXRzL3Y5czdfazNwX204eDIubXAz", "YXNzZXRzL24ydzRfcnZ0X2I1cTkubXAz"]; // Encoded paths
+    const _0x4a2 = ["YXNzZXRzL3Y5czdfazNwX204eDIubXAz", "YXNzZXRzL24ydzRfcjZ0X2I1cTkubXAz"]; // Encoded paths
 
     selectionBtns.forEach(btn => {
         btn.addEventListener('click', () => {
